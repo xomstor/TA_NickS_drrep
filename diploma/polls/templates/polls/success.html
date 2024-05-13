@@ -1,0 +1,16 @@
+{% load static %}
+{% block title %}Опрос создан! {% endblock %}
+<form action="{% url 'polls:search' %}" method="GET">
+    <input type="text" name="search_query" placeholder="Поиск по опросам...">
+    <button type="submit" class="btn btn-search">Search</button>
+</form>
+
+{% if search_query %}
+    <ul>
+    {% for search in search_query %}
+        <li>{{ search.question_text }}</li>
+    {% endfor %}
+    </ul>
+{% endif %}
+
+<a href="{% url 'polls:index' %}" class="btn btn-create">Вернуться к списку опросов</a>

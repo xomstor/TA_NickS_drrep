@@ -19,3 +19,18 @@ class Choice(models.Model):
 
     def __str__(self):
         return self.choice_text
+    
+class Search(models.Model):
+    search_query = models.TextField()
+    question_text = models.CharField(max_length=255)
+    pub_date = models.DateTimeField('дата публикации', default=timezone.now)
+
+    def __str__(self):
+        return self.search_query
+
+class Poll(models.Model):
+    title = models.CharField(max_length=200)
+
+class Answer(models.Model):
+    poll = models.ForeignKey(Poll, on_delete=models.CASCADE)
+    option = models.CharField(max_length=200)

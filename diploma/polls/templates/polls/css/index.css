@@ -1,0 +1,18 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #9fc7d8;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    text-decoration: none !important;
+}

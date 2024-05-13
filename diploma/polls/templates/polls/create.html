@@ -1,0 +1,57 @@
+{% load static %}
+{% block title %}{% endblock %}
+
+<form action="{% url 'polls:create' %}" method="post">
+    {% csrf_token %}
+    <label for="poll_title">Название опроса:</label>
+    <input type="text" id="poll_title" name="poll_title" required>
+
+    <label for="answer_option">Вариант ответа:</label>
+    <input type="text" id="answer_option" name="answer_option" required>
+    
+    <button type="button" onclick="addAnswerOption()">Добавить вариант ответа</button>
+    
+    <ul id="answer_options_list"></ul>
+    
+    <input type="submit" value="Создать">
+</form>
+
+<script>
+    function addAnswerOption() {
+        let answerOption = document.getElementById("answer_option").value;
+        let answerOptionsList = document.getElementById("answer_options_list");
+        let li = document.createElement("li");
+        li.textContent = answerOption;
+        answerOptionsList.appendChild(li);
+    }
+</script>
+<script>
+    document.getElementById('create-poll-form').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        let pollTitle = document.getElementById('poll_title').value.trim();
+        if (pollTitle === '') {
+            alert('Название опроса не может быть пустым!');
+            return;
+        }
+
+        let answerOptions = [];
+        document.querySelectorAll('#answer_options_list li').forEach(function(li) {
+            answerOptions.push(li.textContent);
+        });
+
+        if (answerOptions.length === 0) {
+            alert('Добавьте хотя бы один вариант ответа!');
+            return;
+        }
+
+        let answerOptionsInput = document.createElement('input');
+        answerOptionsInput.type = 'hidden';
+        answerOptionsInput.name = 'answer_option';
+        answerOptionsInput.value = answerOptions.join(',');
+
+        document.getElementById('create-poll-form').appendChild(answerOptionsInput);
+
+        document.getElementById('create-poll-form').submit();
+    });
+</script>

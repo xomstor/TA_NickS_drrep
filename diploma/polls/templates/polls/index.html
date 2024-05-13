@@ -1,12 +1,22 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/index.css' %}">
+{% block title %}Главная {% endblock %}
 {% if latest_question_list %}
     <ul>
     {% for question in latest_question_list %}
         <li>
             <a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a>
-            <a href="{% url 'polls:results' question.id %}" class="btn btn-primary"><span style="font-size: 8;margin-left: 150px; color: blanchedalmond;">Посмотреть результаты</span></a>
+            <a href="{% url 'polls:results' question.id %}" class="btn btn-primary"><span style="font-size: 13;margin-left: 150px; color: blanchedalmond;">Посмотреть результаты</span></a>
         </li>
     {% endfor %}
     </ul>
 {% else %}
     <p>Нет доступных опросов!</p>
 {% endif %}
+
+<form action="{% url 'polls:search' %}" method="GET">
+    <input type="text" name="search_query" placeholder="Поиск по опросам...">
+    <button type="submit" class="btn btn-search">Search</button>
+</form>
+
+<a href="{% url 'polls:create' %}" class="btn btn-create">Создать свой опрос!</a>
